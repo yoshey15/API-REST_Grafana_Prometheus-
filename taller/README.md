@@ -1,7 +1,7 @@
 # Taller — Monitoreo y Observabilidad
 
-**Nombre:** [Tu nombre]  
-**Código:** [Tu código]
+**Nombre:** Andres Felipe Cardoso Bernal
+**Código:** 202210005601
 
 ## Cómo correr el proyecto
 
@@ -26,10 +26,16 @@ docker-compose up -d
 | `GET /api/lento` | Simula procesamiento lento (2-3 seg) |
 | `GET /metrics` | Métricas en formato Prometheus |
 
+## Querys
+rate(http_requests_total[1m])
+rate(http_request_duration_seconds_sum[1m]) / rate(http_request_duration_seconds_count[1m])
+http_active_requests
+
 ## Generar tráfico sintético
 
-```bash
-bash scripts/generate-traffic.sh
+```Powershell
+while ($true) { try { Invoke-WebRequest -Uri "http://localhost:3000" -UseBasicParsing | Out-Null; Invoke-WebRequest -Uri "http://localhost:3000/api/datos" -UseBasicParsing | Out-Null; Invoke-WebRequest -Uri "http://localhost:3000/api/lento" -UseBasicParsing | Out-Null; Write-Host "Request enviado..." } catch { Write-Host "Error" }; Start-Sleep -Seconds 1 }
+
 ```
 
 ## Detener
